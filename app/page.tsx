@@ -11,18 +11,17 @@ export default function Home() {
   ]);
   const [input, setInput] = useState<string>("");
 
-  useEffect(() => {
-    console.log("Hi!");
-    const translatedReplies = replies.map(
-      (reply: { p: string; t: string }, index: number) => {
-        if (reply.p === "R") {
-          return `Reporting EE: ${reply.t}`;
-        }
-        return `Manager: ${reply.t}`;
+  const translatedReplies = (): string[] => {
+    let arr: string[] = [];
+    replies.map((reply: { p: string; t: string }) => {
+      if (reply.p === "R") {
+        arr.push(`Reporting EE: ${reply.t}`);
+      } else {
+        arr.push(`Manager: ${reply.t}`);
       }
-    );
-    console.log(translatedReplies);
-  }, [replies]);
+    });
+    return arr;
+  };
 
   function handleSubmit() {
     setReplies([...replies, { p: "M", t: input }]);
@@ -31,11 +30,16 @@ export default function Home() {
 
   useEffect(() => {
     console.log(replies);
+    console.log(translatedReplies());
   }, [replies]);
 
   return (
     <div className="container flex justify-center mx-auto mt-64">
-      <div className="w-96 h-96 mr-36 bg-white border-2 border-primary rounded"></div>
+      <div className="w-96 h-96 mr-36 bg-white border-2 border-primary rounded">
+        {translatedReplies().map((reply: string, index: number) => {
+          return <p key={index}>{reply}</p>;
+        })}
+      </div>
       <div className="flex items-center space-x-2">
         <input
           type="text"
