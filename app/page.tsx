@@ -37,14 +37,18 @@ export default function Home() {
     <div className="container flex justify-center mx-auto mt-64">
       <div className="w-96 h-96 mr-36 bg-white border-2 border-primary rounded">
         {translatedReplies().map((reply: string, index: number) => {
-          return <p key={index}>{reply}</p>;
+          return (
+            <p key={index} className="text-black">
+              {reply}
+            </p>
+          );
         })}
       </div>
       <div className="flex items-center space-x-2">
         <input
           type="text"
           placeholder="Type your answer here"
-          className="input input-bordered input-primary bg-white w-full max-w-xs"
+          className="input input-bordered input-primary bg-white w-full max-w-xs text-black"
           value={input}
           //@ts-ignore
           onInput={(e) => setInput(e.target.value)}
